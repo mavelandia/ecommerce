@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio de Sesión{% endblock %}
+{% block header %}
+    <div class="flexsearch">
+        <div class="flexsearch--wrapper">
+            <form class="flexsearch--form" action="#" method="post">
+                <div class="flexsearch--input-wrapper">
+                    <input class="flexsearch--input" type="search" placeholder="Busca un producto">
+                </div>
+              <input class="flexsearch--submit" type="submit" value="&#128270;"/>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block contenido %}
+
+<table style="width: 100%"> <!--slider-->
+    <tr>
+        <td style="padding: 10px; width:50%;">
+            <!-- Slideshow container -->
+            <div class="slideshow-container">
+                <!-- Full-width images with number and caption text -->
+                <div class="mySlides fade">
+                  <div class="numbertext">1 / 3</div>
+                  <img src="{{ url_for('static', filename='prod/slider1.jpg') }}" style="width:100%">
+                  <div class="text">Blusas</div>
+                </div>
+                <div class="mySlides fade">
+                  <div class="numbertext">2 / 3</div>
+                  <img src="{{ url_for('static', filename='prod/slider2.jpg') }}" style="width:100%">
+                  <div class="text">Vestidos</div>
+                </div>
+                <div class="mySlides fade">
+                  <div class="numbertext">3 / 3</div>
+                  <img src="{{ url_for('static', filename='prod/slider3.jpg') }}" style="width:100%">
+                  <div class="text">Ropa Deportiva</div>
+                </div>
+                <!-- Next and previous buttons -->
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <!-- The dots/circles -->
+            <div style="text-align:center">
+              <span class="dot" onclick="currentSlide(1)"></span>
+              <span class="dot" onclick="currentSlide(2)"></span>
+              <span class="dot" onclick="currentSlide(3)"></span>
+            </div>
+        </td>
+
+        <td style="width: 15%;"> </td>
+
+        <td style="width: 30%;"> <!--campos para ingresar los datos de login-->
+            <h1>Cliente Registrado</h1>
+            <form action="{{ url_for('login') }}" method="post" name="formLogin">
+                <div>
+                    {{ form.alias.label  }} <br>
+                    {{ form.alias  }}
+                </div> 
+                <div>
+                    {{ form.clave.label  }} <br>
+                    {{ form.clave  }}  
+                    <img src="{{ url_for('static', filename='img/view.png') }}" alt="Ver contraseña" width="30px" height="30px" onmouseover="mostrarPassword();" onmouseout="ocultarPassword();" >
+                </div> <br>
+                <div>
+                    {{ form.recordar  }}
+                    {{ form.recordar.label  }}
+                    <span style="float: right;">
+                        {{ form.enviar  }}
+                    </span>
+                </div> <br>
+                <div style="text-align: right;">
+                    <a href="{{ url_for('registrarusuario') }}">No tengo Cuenta / Registrarme</a>
+                </div>
+                <div style="text-align: right;">
+                    <a href="#">Olvidé mi contraseña</a>
+                </div> <br>
+            </form>
+    
+        </td>
+
+        <td style="width: 5%;"> </td>
+
+    </tr>    
+</table>
+
+<header>
+    <p style="font-size:x-large; text-align: center; font-weight: bold">LO MÁS VISTO</p>
+</header>
+
+<table style="width: 100%;">
+    <tr>
+        <td>
+            <p style="font-weight: bold;">Blusas</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="{{ url_for('static', filename='prod/img01.jpg') }}" class="img_lomasvisto" alt="Lo más visto"><br>
+            <p style="text-align: center; font-size: small;">Blusa 01</p>
+        </td>
+        <td>
+            <img src="{{ url_for('static', filename='prod/img02.jpg') }}" class="img_lomasvisto" alt="Lo más visto"><br>
+            <p style="text-align: center; font-size: small;">Blusa 02</p>
+        </td>
+        <td>
+            <img src="{{ url_for('static', filename='prod/img03.jpg') }}" class="img_lomasvisto" alt="Lo más visto"><br>
+            <p style="text-align: center; font-size: small;">Blusa 03</p>
+        </td>
+        <td>
+            <img src="{{ url_for('static', filename='prod/img04.jpg') }}" class="img_lomasvisto" alt="Lo más visto"><br>
+            <p style="text-align: center; font-size: small;">Blusa 04</p>
+        </td>
+        <td>
+            <img src="{{ url_for('static', filename='prod/img05.jpg') }}" class="img_lomasvisto" alt="Lo más visto"><br>
+            <p style="text-align: center; font-size: small;">Blusa 05</p>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <p style="font-weight: bold;">Vestidos</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <img src="{{ url_for('static', filename='prod/img06.jpg') }}" class="img_lomasvisto" alt="Lo más visto"><br>
+            <p style="text-align: center; font-size: small;">Vestido 01</p>
+        </td>
+        <td>
+            <img src="{{ url_for('static', filename='prod/img07.jpg') }}" class="img_lomasvisto" alt="Lo más visto"><br>
+            <p style="text-align: center; font-size: small;">Vestido 02</p>
+        </td>
+        <td>
+            <img src="{{ url_for('static', filename='prod/img08.jpg') }}" class="img_lomasvisto" alt="Lo más visto"><br>
+            <p style="text-align: center; font-size: small;">Vestido 03</p>
+        </td>
+        <td>
+            <img src="{{ url_for('static', filename='prod/img09.jpg') }}" class="img_lomasvisto" alt="Lo más visto"><br>
+            <p style="text-align: center; font-size: small;">Vestido 04</p>
+        </td>
+        <td>
+            <img src="{{ url_for('static', filename='prod/img10.jpg') }}" class="img_lomasvisto" alt="Lo más visto"><br>
+            <p style="text-align: center; font-size: small;">Vestido 05</p>
+        </td>
+    </tr>
+</table>
+
+<script>
+    var slideIndex = 0;
+    showSlides();
+    
+    function showSlides() {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {slideIndex = 1}    
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+      setTimeout(showSlides, 3500); // Change image every 3.5 seconds
+    }
+    </script>
+
+{% endblock %}

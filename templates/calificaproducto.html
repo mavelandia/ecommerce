@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block title %}Calificar Productos{% endblock %}
+{% block header %}
+    <img src="{{ url_for('static', filename='img/user.png') }}" alt="Foto del Usuario" height="20" width="20"> |
+    <a href="#">Mis datos</a> |
+    <a href="{{ url_for('logout') }}">Salir de mi Cuenta</a> <br>
+    {% if usuario %}
+        <p style="text-align: right; padding-top: 5px">{{ usuario }} - <a href="{{ url_for('user_in') }}">Regresar a Mi Espacio</a> </p>
+    {% else %}
+        <h3>No hay contenido para la variable usuario {{ usuario }}</h3>
+    {% endif %}
+{% endblock %}
+
+{% block contenido %}
+
+<div style="font-size: small;">
+    Navegación: <a href="{{ url_for('user_in') }}"><img src="{{ url_for('static', filename='img/home.png') }}" alt="Home" height="30" width="30"></a> > <span>{{detprod[11]}}</span> > <span>{{detprod[12]}}</span> > <span>{{detprod[13]}}</span>
+</div>
+
+<table style="width: 100%;">
+    <tr>
+        <td style="border-radius: 3%; width: 60%; border: solid;">
+            <h2 style="text-align: center; text-decoration-line: underline; font:bold;">DETALLE DE PRODUCTO</h2>
+            <div>
+                <table style="width: 100%;">
+                    <tr>
+                        <td align="center" style="width: 30%;">
+                            <img src="/static/prod/{{detprod[0]}}.jpg" alt="Fotos del producto" style="border-radius: 3%; border-color: darkgrey; border-style: groove; ">
+                        </td>
+                        <td style="width: 70%;">
+                            <strong>{{detprod[2]}}</strong><br>
+                            <strong>Talla: </strong>{{detprod[4]}} | <strong>Color: </strong>{{detprod[5]}} | <strong>Material: </strong>{{detprod[6]}} <br> <br>                            
+                            <div style="height: 140px;"> <!--contenedor de altura fija para hacer el efecto de la barra de desplazamiento vertical-->
+                                <div style="height: 130px; overflow: auto;">
+                                    {{detprod[3]}}
+                                </div>
+                            </div>
+                            <br>
+                            <span style="float: right; font-size: small; padding: 5px;"><strong>SKU: </strong>{{detprod[0]}} | <strong>Unidades Disponibles: </strong>{{detprod[10]}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+        <td style="width: 3%;">  </td>
+        <td style="border-radius: 3%; width: 37%; border: solid;">
+            {% if comentarios %}
+                <h3 style="text-align: center; text-decoration-line: underline; font:bold;">OTROS COMENTARON</h3>
+                <div style="height: 220px;"><!--contenedor de altura fija para hacer el efecto de la barra de desplazamiento vertical-->
+                    <div style="height: 210px; overflow:auto">
+                        <table style="width: 100%;">
+                            {% for coment in comentarios %}
+                                <tr>
+                                    <td align="center" style="width: 15%;">
+                                        {% if coment[1] > 0 %}
+                                            <img src="/static/users/{{coment[0]}}.jpg" alt="Foto de {{coment[0]}}" width="50" height="65">
+                                        {% else %}
+                                            <img src="/static/users/user.jpg" alt="Usuario sin foto" width="60" height="75">
+                                        {% endif %}
+                                    </td>
+                                    <td style="width: 85%">
+                                        <strong>{{coment[0]}} en {{coment[4]}} comentó:</strong><br>
+                                        <div style="height: 50px; overflow: auto; font-size:0.75em">{{coment[2]}}</div>
+                                        {% if calprom > 0 %}
+                                            <div style="font-size: 0.75em;">Calificación otorgada: {{coment[3]}}</div> <br>
+                                        {% endif %}
+                                         <hr>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            {% else %}
+                <h3 style="text-align: center; text-decoration-line: underline; font:bold;">¡NADIE HA COMENTADO!</h3> <br> <br> <br> <p>Sé la primera persona en dejar un comentario acerca de éste producto ;-) </p>
+            {% endif %}
+            {% if calprom > 0 %}
+                <br><hr> <div style="text-align: center; "><strong>CALIFICACIÓN PROMEDIO: </strong>{{calprom}}/5.0</div>
+            {% endif %}
+        </td>
+    </tr>
+</table>
+<br>
+<table align="center" style="width: 100%;">
+    <tr>
+        <form action="{{ url_for('guardarprefprod') }}" method="post", name="guardarpreferenciasproducto">
+                <td align="center" style="width: 25%;">
+                <img src="{{ url_for('static', filename='img/wishlist.png') }}" alt="Añadir a Mi lista de Deseos" width="60" height="60"><br>
+                {% if caliprevia[3] == 1 %}
+                    <h3>¡Genial! - El producto ya está en tu Lista de Deseos</h3>
+                    <input type="checkbox" name="agregarlisdeseos" style="font-size: larger;" checked>
+                {% else %}
+                    <input type="checkbox" name="agregarlisdeseos" style="font-size: larger;">
+                {% endif %}
+                <label for="agregarlisdeseos" style="font-size: larger;"> ¡Quiero éste producto!</label>
+                <br> <br> <br>
+            </td>
+            <td style="width: 5%;"> </td>
+            <td style="width: 35%;">
+                <div style="width: 70%; border:solid; border-radius: 8%"> <br>
+                    <p style="text-align: center; font-size: larger; font:bold; text-align: center;">CALIFICAR</p> 
+                    <table align="center" style="width: 100%; font-size: large">
+                        <tr align="center">
+                            {% if caliprevia[1] == 1 %}
+                                <td> <input type="radio" value="1" name="calificaproducto" id="radiocalifprod1" checked> </td>
+                            {% else %}
+                                <td> <input type="radio" value="1" name="calificaproducto" id="radiocalifprod1"> </td>
+                            {% endif %}
+                            {% if caliprevia[1] == 2 %}
+                                <td> <input type="radio" value="2" name="calificaproducto" id="radiocalifprod2" checked> </td>
+                            {% else %}
+                                <td> <input type="radio" value="2" name="calificaproducto" id="radiocalifprod2"> </td>
+                            {% endif %}
+                            {% if caliprevia[1] == 3 %}
+                                <td> <input type="radio" value="3" name="calificaproducto" id="radiocalifprod3" checked> </td>
+                            {% else %}
+                                <td> <input type="radio" value="3" name="calificaproducto" id="radiocalifprod3"> </td>
+                            {% endif %}
+                            {% if caliprevia[1] == 4 %}
+                                <td> <input type="radio" value="4" name="calificaproducto" id="radiocalifprod4" checked> </td>
+                            {% else %}
+                                <td> <input type="radio" value="4" name="calificaproducto" id="radiocalifprod4"> </td>
+                            {% endif %}
+                            {% if caliprevia[1] == 5 %}
+                                <td> <input type="radio" value="5" name="calificaproducto" id="radiocalifprod5" checked> </td>
+                            {% else %}
+                                <td> <input type="radio" value="5" name="calificaproducto" id="radiocalifprod5"> </td>
+                            {% endif %}
+                        </tr>
+                        <tr align="center">
+                            <td> <label for="radiocalifprod1">1</label> </td>
+                            <td> <label for="radiocalifprod2">2</label> </td>
+                            <td> <label for="radiocalifprod3">3</label> </td>
+                            <td> <label for="radiocalifprod4">4</label> </td>
+                            <td> <label for="radiocalifprod5">5</label> </td>
+                        </tr>
+                    </table>
+                <!-- Toca hacer el sistema de estrellas después :-( 
+                <div class="star-rating" style="font-size: 2em; text-align:center;">
+                    <a href="#">★</a>
+                    <a href="#">★</a>
+                    <a href="#">★</a>
+                    <a href="#">★</a>
+                    <a href="#">★</a>
+                </div>
+                -->
+                </div>
+            </td>
+            <td style="width: 35%; text-align: right;">
+                <div>
+                    {% if caliprevia[0] %}
+                        <span style="font-size: medium; font: bold">El {{caliprevia[2]}} comentaste:</span>
+                        <textarea id="comentarproducto" name="comentarproducto" rows="5" cols="40%" style="border: solid; border-radius: 4%; font-size:large">{{caliprevia[0]}}</textarea>
+                    {% else %}
+                        <span style="font-size: medium; font: bold">Comparte tus experiencias acerca de éste producto!</span>
+                        <textarea id="comentarproducto" name="comentarproducto" rows="5" cols="40%" style="border: solid; border-radius: 4%; font-size:large"></textarea>
+                    {% endif %}
+                </div>
+                <div>
+                    <button type="submit" name="prodSel" value={{detprod[1]}}>Guardar Cambios</button>
+                </div>
+            </td>
+        </form>
+    </tr>
+</table>
+
+
+{% endblock %}

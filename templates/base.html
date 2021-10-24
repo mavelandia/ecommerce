@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link  rel="icon" href="{{ url_for('static', filename='img/F21-favicon.png') }}" type="image/png" />
+        {% if titulo %}
+            <title>{{ titulo }} - Forever 21</title>
+        {% else %}
+            <title>Forever 21</title>
+        {% endif %}
+        <script src="{{ url_for('static', filename='js/validacion.js') }}"> </script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" >
+    </head>
+
+    <body>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <script>window.alert("Mensaje: {{ message }}");</script>
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <header>
+            <table style="width:100%;">
+                <tr>
+                    <td>
+                        <a href="{{ url_for('index') }}" style="text-decoration: none;"> <img src="{{ url_for('static', filename='img/logo_forever21.png') }}" alt="Forever 21" width="50" height="40"> </a>
+                    </td>
+                    <td style="float: left;">
+                        <a style="font-size: 250%; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"> <strong>FOREVER 21</strong></a>
+                    </td>
+                    <td style="float: right; padding: 10px;">
+                        <a href="https://facebook.com" target="_blank" style="text-decoration: none;"> <img src="{{ url_for('static', filename='img/logo_facebook.png') }}" alt="Síguenos en Facebook" width="30" height="30"> </a>
+                        <a href="https://instagram.com" target="_blank" style="text-decoration: none;"> <img src="{{ url_for('static', filename='img/logo_instagram.png') }}" alt="Síguenos en Instagram" width="30" height="30"> </a>
+                        <a href="https://twitter.com" target="_blank" style="text-decoration: none;"> <img src="{{ url_for('static', filename='img/logo_twitter.png') }}" alt="Síguenos en Twitter" width="30" height="30"> </a>
+                    </td>
+                    <td style="float: right; padding: 3px;">
+                        {% block header %} {% endblock %}
+                    </td>
+                </tr>
+            </table>
+            <hr>
+        </header>
+
+        <section id="main-content">
+	
+            <article>
+
+                {% block contenido %} {% endblock %}
+                
+            </article> <!-- /article -->
+        
+
+        </section> <!-- / #main-content -->
+
+        <footer>
+            <strong>Forever 21 &#174; 1984-2021. Todos los derechos reservados.</strong>
+            <span><a href="/contactanos.html">Contáctanos</a> | <a href="/empleo.html">Trabaja con Nosotros</a> | <a href="/legales.html">Legales</a>
+            </span>            
+        </footer>
+
+    </body>
+</html>

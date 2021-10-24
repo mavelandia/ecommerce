@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Producto{% endblock %}
+{% block header %}
+    <img src="{{ url_for('static', filename='img/user.png') }}" alt="Foto del Usuario" height="20" width="20"> |
+    <a href="#">Mis datos</a> |
+    <a href="{{ url_for('logout') }}">Salir de mi Cuenta</a> <br>
+    {% if usuario %}
+        <p style="text-align: right; padding-top: 5px"><strong style="color: red;">SuperAdmin:</strong> <strong style="color: green;">{{ usuario }}</strong> - <a href="{{ url_for('admin_in', usuario = usuario) }}">Volver al Dashboard</a></p>
+    {% else %}
+        <h3>No hay contenido para la variable usuario {{ usuario }}</h3>
+    {% endif %}
+{% endblock %}
+
+{% block contenido %}
+
+<h2 style="text-align: center; font:bold">ELIMINAR PRODUCTO EXISTENTE</h2> <br>
+<table style="width: 100%;">
+    <tr>
+        <td style="border-radius: 3%; width: 60%; border: solid;">
+            <h2 style="text-align: center; text-decoration-line: underline; font:bold;">DETALLE DE PRODUCTO A ELIMINAR</h2>
+            <div>
+                <table style="width: 100%;">
+                    <tr>
+                        <td align="center" style="width: 30%;">
+                            <img src="{{ url_for('static', filename='prod/img03.jpg') }}" alt="Fotos del producto" style="border-radius: 3%; border-color: darkgrey; border-style: groove; ">
+                        </td>
+                        <td style="width: 70%;">
+                            <strong>SKU: </strong><input type="text" value="ID3659-S-EST" disabled><br>
+                            <strong>Nombre Producto: </strong><input type="text" value="BLUSA LEOPARDO CUELLO SIN MANGAS" size="25" disabled><br>
+                            <strong>Talla: </strong><input type="text" value="S" size="2" disabled> | <strong>Color: </strong><input type="text" value="Estampado Leopardo" size="4" disabled> | <strong>Material: </strong><input type="text" value="Algodón" size="4" disabled> <br> <br>
+                            <strong>Descripcion del Producto: </strong> <br>
+                            <textarea rows="5" cols="45%" style="border: solid; border-radius: 4%; font-size:large" disabled>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur in, velit, nulla facere, dicta accusamus veniam vitae exercitationem veritatis voluptas harum ut reiciendis sed? Maxime in soluta deleniti possimus beatae. </textarea>
+                            <br><br>
+                            <span style="padding: 5px;"><strong>Unidades Disponibles: </strong>0</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table> <br> <br>
+<button onclick="location.href='{{ url_for( 'login' ) }}'">Eliminar Producto</button>
+<button onclick="location.href='{{ url_for( 'login' ) }}'">Cancelar</button>
+
+
+<br><br>
+{% endblock %}

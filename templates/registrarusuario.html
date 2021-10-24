@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Registrar Nuevo Usuario{% endblock %}
+{% block header %}
+{% endblock %}
+
+{% block contenido %}
+
+<header>
+    <h1>REGISTRARSE COMO NUEVO USUARIO</h1>
+</header>
+
+<table style="width: 70%; border:solid; border-color: black; border-radius: 2%; margin: 0 auto; padding:0.5em">
+    <tr>
+        <td align="center">
+            <img src="{{ url_for('static', filename='img/nuevousuario.png') }}" alt="Nuevo Usuario">
+        </td>
+        <td>
+            <form action="{{ url_for('registrarusuario') }}" method="post" name="formRegistroNuevo">
+                <table>
+                    <tr>
+                        <td>{{ form.tipoID.label  }}</td>
+                        <td>{{ form.tipoID   }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form.numeroID.label  }}</td>
+                        <td>{{ form.numeroID   }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form.nombres.label  }}</td>
+                        <td>{{ form.nombres   }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form.apellidos.label  }}</td>
+                        <td>{{ form.apellidos   }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form.email.label  }}</td>
+                        <td>{{ form.email   }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form.pais.label  }}</td>
+                        <td>{{ form.pais   }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form.alias.label  }}</td>
+                        <td>{{ form.alias   }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form.clave.label  }}</td>
+                        <td>{{ form.clave   }}
+                            <img src="{{ url_for('static', filename='img/view.png') }}" alt="Ver contraseña" width="30px" height="30px" onmouseover="mostrarPassword();" onmouseout="ocultarPassword();" >
+                        </td>
+                    </tr>
+                </table>
+                <hr>
+                <div style="font-size: 0.75em;">
+                    {{ form.aceptapoldatos  }}
+                    <strong>Acepto</strong> que mis datos sean tratados conforme la <a href="#">Política de Privacidad.</a>
+                </div> 
+                <div style="font-size: 0.75em;">
+                    {{ form.aceptatyc  }}
+                    <strong>Acepto</strong> los <a href="#">Términos y Condiciones</a> de la Empresa.
+                </div><br>
+                Ya tengo cuenta registrada, <br>regresar a la <a href="{{ url_for('login') }}">Página de Login</a>
+                    <span style="float: right;">
+                        {{ form.enviar  }}
+                    </span>
+                </p>
+            </form>
+        </td>
+    </tr>
+</table>
+<br><br>
+
+
+{% endblock %}
+
+
+border: solid; align-content: center; width:80%;

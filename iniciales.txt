@@ -1,0 +1,26 @@
+md templates
+
+md static
+
+pip install virtualenv
+
+python -m venv env
+
+env\Scripts\activate.bat
+
+pip install flask
+
+pip install yagmail[all]
+
+pip install validate_email
+
+pip install flask-wtf
+
+set FLASK_APP=app
+
+set FLASK_ENV=deployment
+
+flask run
+
+
+

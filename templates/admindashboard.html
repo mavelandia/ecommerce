@@ -1,0 +1,482 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard Administrativo{% endblock %}
+{% block header %}
+    <img src="{{ url_for('static', filename='img/user.png') }}" alt="Foto del Usuario" height="20" width="20"> |
+    <a href="#">Mis datos</a> |
+    <a href="{{ url_for('logout') }}">Salir de mi Cuenta</a> <br>
+    {% if usuario %}
+        <p style="text-align: right; padding-top: 5px">Hola <strong style="color: red;">SuperAdmin:</strong> <strong style="color: green;">{{ usuario }}</strong></p>
+    {% else %}
+        <h3>No hay contenido para la variable usuario {{ usuario }}</h3>
+    {% endif %}
+{% endblock %}
+
+{% block contenido %}
+<div style="text-align: center;">
+    <h2>DASHBOARD ADMINISTRATIVO</h2>
+</div> <br>
+<table style="width: 100%;">
+    <tr>
+        <td style="width: 50%;">
+            <p><strong style="font-size: large;">Administración de Usuarios</strong> (Total registros: 2135)</p>
+        </td>
+        <td align="center" style="width: 30%;">
+            <div class="flexsearch">
+                <div class="flexsearch--wrapper">
+                    <form class="flexsearch--form" action="#" method="post">
+                        <div class="flexsearch--input-wrapper">
+                            <input class="flexsearch--input" type="search" placeholder="Buscar usuario">
+                        </div>
+                      <input class="flexsearch--submit" type="submit" value="&#128270;"/>
+                    </form>
+                </div>
+            </div>
+        </td>
+        <td align="right" style="width: 20%;">
+            <a href="#">Exportar seleccionados</a>
+        </td>
+    </tr>
+</table>
+
+
+
+
+<table style="width: 100%; border: solid; font-size:small">
+    <tr style="background-color: gainsboro;">
+        <th>
+            <div>
+                <input type="checkbox">
+            </div>
+        </th>
+        <th>
+            <span>Nombres<br>Apellidos</span>
+        </th>
+        <th>
+            <span>TipoID<br>Número ID</span>
+        </th>
+        <th>
+            <span>Usuario</span>
+        </th>
+        <th>
+            <span>País</span>
+        </th>
+        <th>
+            <span>Email</span>
+        </th>
+        <th>
+            <span>Actividad</span>
+        </th>
+        <th>
+            <span>Eliminar</span>
+        </th>
+        <th>
+            <span>Reset PWD</span>
+        </th>
+        <th>
+            <span>Rol</span>
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <input type="checkbox">
+            </div>
+        </td>
+        <td>
+            <span>Miguel<br>Espinosa</span>
+        </td>
+        <td>
+            <span>Cedula<br>11111111</span>
+        </td>
+        <td>
+            <span>SuperAdmin</span>
+        </td>
+        <td>
+            <span>COL</span>
+        </td>
+        <td>
+            <span><a href="#">superadmin@forever21.com</a></span>
+        </td>
+        <td>
+            <span><a href="#">Ver Actividad</a></span>
+        </td>
+        <td>
+            <span style="font:italic">Unable</span>
+        </td>
+        <td>
+            <span style="font:italic">Unable</span>
+        </td>
+        <td>
+            <span style="font:italic,bold">SuperAdmin</span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <input type="checkbox">
+            </div>
+        </td>
+        <td>
+            <span>Admin<br>001</span>
+        </td>
+        <td>
+            <span>Cedula<br>22222222</span>
+        </td>
+        <td>
+            <span>admin001</span>
+        </td>
+        <td>
+            <span>COL</span>
+        </td>
+        <td>
+            <span><a href="#">admin001@forever21.com</a></span>
+        </td>
+        <td>
+            <span><a href="#">Ver Actividad</a></span>
+        </td>
+        <td>
+            <span><a href="#">Eliminar</a></span>
+        </td>
+        <td>
+            <span><a href="#">Reset PWD</a></span>
+        </td>
+        <td>
+            <span style="font:italic,bold">Administrador<br><a href="#">Cambiar Rol</a></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <input type="checkbox">
+            </div>
+        </td>
+        <td>
+            <span>Pedro<br>Pérez</span>
+        </td>
+        <td>
+            <span>Cedula<br>33333333</span>
+        </td>
+        <td>
+            <span>pperez333</span>
+        </td>
+        <td>
+            <span>COL</span>
+        </td>
+        <td>
+            <span><a href="#">pperez333@gmail.com</a></span>
+        </td>
+        <td>
+            <span><a href="#">Ver Actividad</a></span>
+        </td>
+        <td>
+            <span><a href="#">Eliminar</a></span>
+        </td>
+        <td>
+            <span><a href="#">Reset PWD</a></span>
+        </td>
+        <td>
+            <span style="font:italic,bold">Usuario<br><a href="#">Cambiar Rol</a></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <input type="checkbox">
+            </div>
+        </td>
+        <td>
+            <span>John<br>Smith</span>
+        </td>
+        <td>
+            <span>Pasaporte<br>AJ568154</span>
+        </td>
+        <td>
+            <span>jhonsmith1980</span>
+        </td>
+        <td>
+            <span>USA</span>
+        </td>
+        <td>
+            <span><a href="#">jhonsmith1980@yahoo.com</a></span>
+        </td>
+        <td>
+            <span><a href="#">Ver Actividad</a></span>
+        </td>
+        <td>
+            <span><a href="#">Eliminar</a></span>
+        </td>
+        <td>
+            <span><a href="#">Reset PWD</a></span>
+        </td>
+        <td>
+            <span style="font:italic,bold">Usuario<br><a href="#">Cambiar Rol</a></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <input type="checkbox">
+            </div>
+        </td>
+        <td>
+            <span>Luis Felipe<br>Barrios Zuluaga</span>
+        </td>
+        <td>
+            <span>Cedula<br>44444444</span>
+        </td>
+        <td>
+            <span>luisfelbarriosz</span>
+        </td>
+        <td>
+            <span>COL</span>
+        </td>
+        <td>
+            <span><a href="#">luis2000felipe@gmail.com</a></span>
+        </td>
+        <td>
+            <span><a href="#">Ver Actividad</a></span>
+        </td>
+        <td>
+            <span><a href="#">Eliminar</a></span>
+        </td>
+        <td>
+            <span><a href="#">Reset PWD</a></span>
+        </td>
+        <td>
+            <span style="font:italic,bold">Usuario<br><a href="#">Cambiar Rol</a></span>
+        </td>
+    </tr>
+</table>
+<br><br>
+
+<table style="width: 100%;">
+    <tr>
+        <td style="width: 30%;">
+            <p><strong style="font-size: large;">Gestión de Productos</strong></p>
+        </td>
+        <td align="center" style="width: 30%;">
+            <div class="flexsearch">
+                <div class="flexsearch--wrapper">
+                    <form class="flexsearch--form" action="#" method="post">
+                        <div class="flexsearch--input-wrapper">
+                            <input class="flexsearch--input" type="search" placeholder="Buscar producto">
+                        </div>
+                      <input class="flexsearch--submit" type="submit" value="&#128270;"/>
+                    </form>
+                </div>
+            </div>
+        </td>
+        <td align="right" style="width: 20%;">
+            <button onclick="location.href='{{ url_for('agregarproducto', usuario = usuario) }}'">Agregar Nuevo Producto</button>
+        </td>
+        <td align="right" style="width: 20%;">
+            <a href="#">Exportar seleccionados</a>
+        </td>
+    </tr>
+</table>
+<table style="width: 100%; border: solid; font-size:small">
+    <tr style="background-color: gainsboro;">
+        <th>
+            <div>
+                <input type="checkbox">
+            </div>
+        </th>
+        <th>
+            <span>SKU / ID Producto</span>
+        </th>
+        <th>
+            <span>Nombre<br>Producto</span>
+        </th>
+        <th>
+            <span># Unidades<br>en inventario</span>
+        </th>
+        <th>
+            <span>Calificación<br>Promedio</span>
+        </th>
+        <th>
+            <span>Editar</span>
+        </th>
+        <th>
+            <span>Eliminar</span>
+        </th>
+        <th>
+            <span>Comentarios</span>
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <input type="checkbox">
+            </div>
+        </td>
+        <td>
+            <span>ID52348-M-ROJ</span>
+        </td>
+        <td>
+            <span>BLUSA FORMAL DAMA</span>
+        </td>
+        <td>
+            <span style="text-align: right;">125</span>
+        </td>
+        <td>
+            <span style="text-align: right;">4.16</span>
+        </td>
+        <td>
+            <span><a href="{{ url_for('editarproducto', usuario = usuario) }}">Editar</a></span>
+        </td>
+        <td>
+            <span style="font:italic">Existencias Bodega</span>
+        </td>
+        <td>
+            <span><a href="#">Ver Comentarios</a></span>
+    </td>
+    <tr>
+        <td>
+            <div>
+                <input type="checkbox">
+            </div>
+        </td>
+        <td>
+            <span>ID4651-XS-DOR</span>
+        </td>
+        <td>
+            <span>VESTIDO FIESTA PLIEGUES</span>
+        </td>
+        <td>
+            <span style="text-align: right;">48</span>
+        </td>
+        <td>
+            <span style="text-align: right;">4.65</span>
+        </td>
+        <td>
+            <span><a href="{{ url_for('editarproducto', usuario = usuario) }}">Editar</a></span>
+        </td>
+        <td>
+            <span style="font:italic">Existencias Bodega</span>
+        </td>
+        <td>
+            <span><a href="#">Ver Comentarios</a></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <input type="checkbox">
+            </div>
+        </td>
+        <td>
+            <span>ID9534-M-NEG</span>
+        </td>
+        <td>
+            <span>VESTIDO COQUETO HOMBRO DEST MANGA LARGA</span>
+        </td>
+        <td>
+            <span style="text-align: right;">0</span>
+        </td>
+        <td>
+            <span style="text-align: right;">4.88</span>
+        </td>
+        <td>
+            <span><a href="{{ url_for('editarproducto', usuario = usuario) }}">Editar</a></span>
+        </td>
+        <td>
+            <span><a href="{{ url_for('eliminarproducto', usuario = usuario) }}">Eliminar</a></span>
+        </td>
+        <td>
+            <span><a href="#">Ver Comentarios</a></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <input type="checkbox">
+            </div>
+        </td>
+        <td>
+            <span>ID3659-S-EST</span>
+        </td>
+        <td>
+            <span>BLUSA LEOPARDO CUELLO SIN MANGAS</span>
+        </td>
+        <td>
+            <span style="text-align: right;">0</span>
+        </td>
+        <td>
+            <span style="text-align: right;">2.96</span>
+        </td>
+        <td>
+            <span><a href="{{ url_for('editarproducto', usuario = usuario) }}">Editar</a></span>
+        </td>
+        <td>
+            <span><a href="{{ url_for('eliminarproducto', usuario = usuario) }}">Eliminar</a></span>
+        </td>
+        <td>
+            <span><a href="#">Ver Comentarios</a></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <input type="checkbox">
+            </div>
+        </td>
+        <td>
+            <span>ID5965-S-CUA</span>
+        </td>
+        <td>
+            <span>VESTIDO CORTO CUADROS B/N</span>
+        </td>
+        <td>
+            <span style="text-align: right;">26</span>
+        </td>
+        <td>
+            <span style="text-align: right;">4.36</span>
+        </td>
+        <td>
+            <span><a href="{{ url_for('editarproducto', usuario = usuario) }}">Editar</a></span>
+        </td>
+        <td>
+            <span style="font:italic">Existencias Bodega</span>
+        </td>
+        <td>
+            <span><a href="#">Ver Comentarios</a></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <input type="checkbox">
+            </div>
+        </td>
+        <td>
+            <span>ID3548-L-VER</span>
+        </td>
+        <td>
+            <span>BLUSA SEMIFORMAL HOMBRO DESTAPADO</span>
+        </td>
+        <td>
+            <span style="text-align: right;">0</span>
+        </td>
+        <td>
+            <span style="text-align: right;">2.30</span>
+        </td>
+        <td>
+            <span><a href="{{ url_for('editarproducto', usuario = usuario) }}">Editar</a></span>
+        </td>
+        <td>
+            <span><a href="{{ url_for('eliminarproducto', usuario = usuario) }}">Eliminar</a></span>
+        </td>
+        <td>
+            <span><a href="#">Ver Comentarios</a></span>
+        </td>
+    </tr>
+</table> <br><br>
+
+{% endblock %}
+
+
+
+
+
+

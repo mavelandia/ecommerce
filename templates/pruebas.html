@@ -1,0 +1,9 @@
+{{ lista }}
+<br> <br> <br>
+{% for result in lista %}
+    <ul>
+    {% for elem in result %}
+        <li>{{elem}}</li>
+    {% endfor %}
+    </ul>
+{% endfor %}

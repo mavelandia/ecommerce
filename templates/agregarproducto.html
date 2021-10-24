@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Agregar Producto{% endblock %}
+{% block header %}
+    <img src="{{ url_for('static', filename='img/user.png') }}" alt="Foto del Usuario" height="20" width="20"> |
+    <a href="#">Mis datos</a> |
+    <a href="{{ url_for('logout') }}">Salir de mi Cuenta</a> <br>
+    {% if usuario %}
+        <p style="text-align: right; padding-top: 5px"><strong style="color: red;">SuperAdmin:</strong> <strong style="color: green;">{{ usuario }}</strong> - <a href="{{ url_for('admin_in', usuario = usuario) }}">Volver al Dashboard</a></p>
+    {% else %}
+        <h3>No hay contenido para la variable usuario {{ usuario }}</h3>
+    {% endif %}
+{% endblock %}
+
+{% block contenido %}
+
+<h2 style="text-align: center; font:bold">AGREGAR NUEVO PRODUCTO</h2> <br>
+<div>
+    <form action="{{ url_for( 'agregarproducto' ) }}" method="post" name="formNuevoProducto">
+        <table style="width: 80%; border:solid">
+            <tr>
+                <td>
+                    {{ form.sku.label  }}
+                    {{ form.sku   }}
+                </td>
+                <td>
+                    {{ form.nomprod.label  }}
+                    {{ form.nomprod   }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.talla.label  }}
+                    {{ form.talla   }}
+                </td>
+                <td>
+                    {{ form.color.label  }}
+                    {{ form.color   }}
+                </td>
+            </tr>
+            <td>
+                {{ form.material.label  }}
+                    {{ form.material   }}
+                </td>
+                <td>
+                    {{ form.invent_inicial.label  }}
+                    {{ form.invent_inicial   }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.descripcion.label  }} <br>
+                    <textarea rows="5" cols="45%" style="border: solid; border-radius: 4%; font-size:large">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur in, velit, nulla facere, dicta accusamus veniam vitae exercitationem veritatis voluptas harum ut reiciendis sed? Maxime in soluta deleniti possimus beatae. </textarea>
+                </td>
+                <td>
+                    <input type="button" value="Agregar Fotos">
+                </td>
+            </tr>
+        </table> <br>
+        <div> 
+            {{ form.enviar }} 
+            <button onclick="location.href='{{ url_for( 'login' ) }}'">Cancelar</button>
+        </div>
+    </form>
+
+</div> <br><br>
+
+{% endblock %}

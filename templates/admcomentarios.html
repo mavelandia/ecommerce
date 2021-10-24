@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Revisar Comentarios{% endblock %}
+{% block header %}
+    <img src="{{ url_for('static', filename='img/user.png') }}" alt="Foto del Usuario" height="20" width="20"> |
+    <a href="#">Mis datos</a> |
+    <a href="{{ url_for('logout') }}">Salir de mi Cuenta</a> <br>
+    {% if usuario %}
+        <p style="text-align: right; padding-top: 5px">{{ usuario }} - <a href="{{ url_for('user_in') }}">Regresar a Mi Espacio</a> </p>
+    {% else %}
+        <h3>No hay contenido para la variable usuario {{ usuario }}</h3>
+    {% endif %}
+{% endblock %}
+
+{% block contenido %}
+
+<table style="width: 100%;">
+    <tr>
+        <td align="center" style="width: 10%;">
+            <a href="#"><img src="{{ url_for('static', filename='img/ver_lista.png') }}" alt="Ver en forma de lista" height="30" width="30"> </a> | 
+            <a href="#"><img src="{{ url_for('static', filename='img/ver_cuadricula.png') }}" alt="Ver cuadrículas" height="30" width="30"> </a>
+        </td>
+        <td align="center" style="width: 10%;">
+            <form action="#">
+                <label for="ordenar">Ordenar por</label>
+                <select name="ordemar" id="ordenar">
+                  <optgroup label="Fecha">
+                    <option value="fecha_reciente">Más reciente</option>
+                    <option value="fecha_antiguo">Más antiguos</option>
+                  </optgroup>
+                </select>
+            </form>
+        </td>
+        <td align="center" style="width: 70%; font:bold">
+            <h2>REVISAR MIS COMENTARIOS</h2>
+        </td>
+        <td align="center" style="width: 10%;">
+            <img src="{{ url_for('static', filename='img/comments.png') }}" alt="Comentarios de Productos" height="70" width="70">
+        </td>
+    </tr>
+</table>
+<br>
+
+{% for elem in produsuario %}
+    <table style="border: solid; width: 100%; border-radius: 3%;">
+        <tr>
+            <td align="center" style="width: 15%;">
+                <img src="/static/prod/{{elem[3]}}.jpg" alt="Fotos del producto" style="border-radius: 3%; border-color: darkgrey; border-style: groove; ">
+            </td>
+            <td style="width: 45%;">
+                <strong style="text-decoration-line: underline;">{{elem[4]}}</strong><br>
+                <strong>Talla: </strong>{{elem[6]}} | <strong>Color: </strong>{{elem[5]}} | <strong>Material: </strong>{{elem[7]}} <br> <br>                            
+                <div style="height: 140px;"> <!--contenedor de altura fija para hacer el efecto de la barra de desplazamiento vertical-->
+                    <div style="height: 130px; overflow: auto;">
+                        {{elem[8]}}
+                    </div>
+                </div>
+            </td>
+            <td align="center" style="width: 40%;">
+                <form action="{{ url_for('editacomentario') }}" method="post", name="editarcomentariosusuario">
+                    <div>
+                        <textarea id="user_comment" name="editarcomentario" rows="7" cols="50" style="border:solid; border-radius: 4%;"">{{elem[1]}}</textarea>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="float: left; font-size:smaller">Comentado el {{elem[2]}}</span>
+                        <input type="hidden" name="prodSel" value="{{elem[0]}}">
+                        <button type="submit" name="btneditcomm" value="Guardar">Guardar</button>
+                        <button type="submit" name="btneditcomm" value="Eliminar">Eliminar</button>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <br>
+{% endfor %}
+
+{% endblock %}
+
+
+
+
+
+

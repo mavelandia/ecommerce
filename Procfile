@@ -1,0 +1,1 @@
+web: gunicorn nombre_archivo_ejecutar:app

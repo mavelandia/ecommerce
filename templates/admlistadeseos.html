@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Deseos{% endblock %}
+{% block header %}
+    <img src="{{ url_for('static', filename='img/user.png') }}" alt="Foto del Usuario" height="20" width="20"> |
+    <a href="#">Mis datos</a> |
+    <a href="{{ url_for('logout') }}">Salir de mi Cuenta</a> <br>
+    {% if usuario %}
+        <p style="text-align: right; padding-top: 5px">{{ usuario }} - <a href="{{ url_for('user_in') }}">Regresar a Mi Espacio</a> </p>
+    {% else %}
+        <h3>No hay contenido para la variable usuario {{ usuario }}</h3>
+    {% endif %}
+{% endblock %}
+
+{% block contenido %}
+
+<table style="width: 100%;">
+    <tr>
+        <td align="center" style="width: 10%;">
+            <a href="#"><img src="{{ url_for('static', filename='img/ver_lista.png') }}" alt="Ver en forma de lista" height="30" width="30"> </a> | 
+            <a href="#"><img src="{{ url_for('static', filename='img/ver_cuadricula.png') }}" alt="Ver cuadrículas" height="30" width="30"> </a>
+        </td>
+        <td align="center" style="width: 10%;">
+            <form action="#">
+                <label for="ordenar">Ordenar por</label>
+                <select name="ordemar" id="ordenar">
+                  <optgroup label="Fecha">
+                    <option value="fecha_reciente">Más reciente</option>
+                    <option value="fecha_antiguo">Más antiguos</option>
+                  </optgroup>
+                </select>
+            </form>
+        </td>
+        <td align="center" style="width: 70%; font:bold">
+            <h2>GESTIONAR MI LISTA DE DESEOS</h2>
+        </td>
+        <td align="center" style="width: 10%;">
+            <img src="{{ url_for('static', filename='img/wishlist.png') }}" alt="Lista de Deseos" height="70" width="70">
+        </td>
+    </tr>
+</table>
+<br>
+
+{% for elem in produsuario %}
+    <table style="border: solid; width: 100%; border-radius: 3%;">
+        <tr>
+            <td align="center" style="width: 15%;">
+                <img src="/static/prod/{{elem[4]}}.jpg" alt="Fotos del producto" style="border-radius: 3%; border-color: darkgrey; border-style: groove; ">
+            </td>
+            <td style="width: 45%;">
+                <strong style="text-decoration-line: underline;">{{elem[5]}}</strong><br>
+                <strong>Talla: </strong>{{elem[7]}} | <strong>Color: </strong>{{elem[6]}} | <strong>Material: </strong>{{elem[8]}} <br> <br>                            
+                <div style="height: 140px;"> <!--contenedor de altura fija para hacer el efecto de la barra de desplazamiento vertical-->
+                    <div style="height: 130px; overflow: auto;">
+                        {{elem[9]}}
+                    </div>
+                </div>
+            </td>
+            <td align="center" style="width: 40%;">
+                <form action="{{ url_for('editalistadeseos') }}" method="post", name="editarlistadeseosusuario">
+                    <div>
+                        <span><strong>TU CALIFICACIÓN PARA ESTE PRODUCTO</strong></span> <br>
+                        <table align="center" style="width: 70%; font-size: large">
+                            <tr align="center">
+                                {% if elem[1] == 1 %}
+                                    <td> <input type="radio" value="1" name="calificaproducto" id="radiocalifprod1" checked> </td>
+                                {% else %}
+                                    <td> <input type="radio" value="1" name="calificaproducto" id="radiocalifprod1"> </td>
+                                {% endif %}
+                                {% if elem[1] == 2 %}
+                                    <td> <input type="radio" value="2" name="calificaproducto" id="radiocalifprod2" checked> </td>
+                                {% else %}
+                                    <td> <input type="radio" value="2" name="calificaproducto" id="radiocalifprod2"> </td>
+                                {% endif %}
+                                {% if elem[1] == 3 %}
+                                    <td> <input type="radio" value="3" name="calificaproducto" id="radiocalifprod3" checked> </td>
+                                {% else %}
+                                    <td> <input type="radio" value="3" name="calificaproducto" id="radiocalifprod3"> </td>
+                                {% endif %}
+                                {% if elem[1] == 4 %}
+                                    <td> <input type="radio" value="4" name="calificaproducto" id="radiocalifprod4" checked> </td>
+                                {% else %}
+                                    <td> <input type="radio" value="4" name="calificaproducto" id="radiocalifprod4"> </td>
+                                {% endif %}
+                                {% if elem[1] == 5 %}
+                                    <td> <input type="radio" value="5" name="calificaproducto" id="radiocalifprod5" checked> </td>
+                                {% else %}
+                                    <td> <input type="radio" value="5" name="calificaproducto" id="radiocalifprod5"> </td>
+                                {% endif %}
+                            </tr>
+                            <tr align="center">
+                                <td> <label for="radiocalifprod1">1</label> </td>
+                                <td> <label for="radiocalifprod2">2</label> </td>
+                                <td> <label for="radiocalifprod3">3</label> </td>
+                                <td> <label for="radiocalifprod4">4</label> </td>
+                                <td> <label for="radiocalifprod5">5</label> </td>
+                            </tr>
+                        </table> <br>
+                        <span style="font-size: small;"><strong>Último cambio: </strong>{{elem[3]}}</span> <br>
+                    </div>
+                    <div style="text-align: center;">
+                        <input type="hidden" name="prodSel" value="{{elem[0]}}">
+                        <button type="submit" name="btneditlide" value="Guardar">Guardar Cambio de Calificación</button> <br> <br>
+                        <button type="submit" name="btneditlide" value="Eliminar">Eliminar de mi Lista de Deseos</button>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <br>
+{% endfor %}
+
+{% endblock %}
+
+
+
+
+
+

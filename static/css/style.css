@@ -1,0 +1,291 @@
+body {
+	margin: 10px;
+	padding: 10px;
+  background-color: azure;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 1em;
+}
+
+h1 {
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: none;
+  color: black;
+  text-decoration-line: underline;
+}
+
+a:visited {
+  text-decoration: none;
+  color: blue;
+}
+
+p {
+	margin: 0 0 1.3em 0;
+}
+
+div {
+  padding-bottom: 3px;
+}
+  div input, div select {
+    border-radius: 5px;
+    outline      : none;
+    font-size    : large;
+  }
+
+span input, span select {
+  border-radius: 5px;
+  outline      : none;
+  font-size    : large;
+}
+
+td, .img_lomasvisto {
+  overflow:hidden;
+}
+  td a {
+   text-decoration: none;
+  }
+   .img_lomasvisto:hover {
+     border: 3px solid black;
+     transition:all .3s ease-in-out;
+     -webkit-transform:scale(1.2);
+     transform:scale(1.2);
+   }
+  
+  
+
+/***********************
+ *  BARRA DE BUSQUEDA  *
+ ***********************/
+ .flexsearch--wrapper {
+	height: auto;
+	width: auto;
+	max-width: 100%; /*estaba al 100% */
+	overflow: hidden; /* estaba hidden */
+	background: transparent;
+	margin: 0;
+	position: static;  /* estaba static */
+}
+.flexsearch--form {
+	overflow:inherit; /* estaba hidden */
+	position: relative; /* estaba relative */
+}
+.flexsearch--input-wrapper {
+	padding: 0 66px 0 0; /* Right padding for submit button width --- estaban así: 0 66px 0 0*/
+	overflow: hidden;  /* estaba hidden */
+}
+.flexsearch--input {
+  width: 95%; /*estaba al 100%, lo dejé al 97% para que ajustara el radius del borde derecho */
+}
+/* Configurable Styles */
+.flexsearch {
+  padding: 0 0 0 0; /* Padding for other horizontal elements */
+}
+.flexsearch--input {
+  -webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+ 	height: 30px; /*estaba en 60px */
+  padding: 0px 5px 0 10px; /* estaban así: 0 46px 0 10px */
+	border-color: #888;
+  border-radius: 35px; /* (height/2) + border-width */
+  border-style: solid;
+	border-width: 5px;
+  margin-top: 5px;  /* estaba 15px */
+  color: #333;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-size: 15px; /* estaba en 26px --- define el tamaño de la letra en la caja de texto */
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+.flexsearch--submit {
+  position: absolute; /*estaba en absolute */
+	right: 0;
+	top: 0;
+	display: block;
+	width: 60px;
+	height: 40px; /*estaba en 60px */
+  padding: 0;
+  border: none;
+	margin-top: 5px; /* margin-top + border-width --- estaba en 20px */
+  margin-right: 0; /* border-width --- estaba en 5px */
+	background: transparent;
+  color: #888;
+  font-family: 'Helvetica', sans-serif;
+  font-size: 30px; /*estaba en 40px --- define el tamaño de la flecha */
+  line-height: 20px; /*estaba en 60px --- define el borde superior de la flecha*/
+}
+.flexsearch--input:focus {
+  outline: none;
+  border-color: #333;
+}
+.flexsearch--input:focus.flexsearch--submit {
+ 	color: #333; 
+}
+.flexsearch--submit:hover {
+  color: #333;
+  cursor: pointer;
+}
+::-webkit-input-placeholder {
+	color: #888;  
+}
+input:-moz-placeholder {
+  color: #888
+}
+
+/* Pretify demo */
+.BarraBusqueda {
+  float: right;
+  margin: 25px;
+  color: #333;
+  font-family: 'Helvetica', sans-serif;
+  font-size: 45px;
+  font-weight: bold;
+  line-height: 45px;
+  text-align: center;
+}
+/***********************
+ * FIN BARRA BUSQUEDA  *
+ ***********************/
+
+
+/***********************
+ *  SLIDER  *
+ ***********************/
+* {box-sizing:border-box}
+img {vertical-align: middle;}
+/* Hide the images by default */
+.mySlides {display: none;}
+/* Slideshow container */
+.slideshow-container {
+  max-width: 350px;
+  position: relative;
+  margin: auto;
+}
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {background-color: rgba(0,0,0,0.8);
+
+}
+/* Caption text */
+.text {
+  color: black;
+  font-size: 15px;
+  padding: 3px 3px;
+  position: absolute;
+  bottom: 3px;
+  width: 100%;
+  text-align: center;
+}
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+.active, .dot:hover {
+  background-color: #717171;
+}
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .text {font-size: 11px}
+}
+/***********************
+ *  FINAL DEL SLIDER  *
+ ***********************/
+
+/***********************
+ *  CALIFICACION POR ESTRELLAS  *
+ ***********************/
+ .star-rating {
+  display: inline-block;
+ }  
+  .star-rating a {
+    color: gray;
+    text-decoration: none;
+    text-align: center;
+    transition: color .1s;
+  }    
+    .star-rating a:hover {
+      color: yellow;
+    }
+       .star-rating ~ a {
+        color: yellow;
+      }
+
+
+
+body footer {  
+  bottom: 0;
+  position: static;
+  background-color: black;
+  color: white;
+  font-size: small;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  text-decoration-color: none;
+  width: 96%;
+  height: 40px;
+  padding: 15px;
+}
+  footer span {
+    float:right;
+  }
+  footer a {
+    text-decoration: none;
+    color: white;
+  }
+    footer a:hover, footer a:visited {
+      background: black;
+      color: white;
+    }
+ 
