@@ -1,1 +1,1 @@
-web: gunicorn nombre_archivo_ejecutar:app
+web: gunicorn app:app
