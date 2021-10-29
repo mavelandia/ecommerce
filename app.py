@@ -111,9 +111,6 @@ def registrarusuario():
     sigue = 'S'
     if sigue == 'S':
         if request.method == 'POST':
-            if form.cancelar.data:  #pulsaron 'Cancelar'
-                return redirect (url_for('login'))
-                
             tipoid = request.form['tipoID']
             numeroid = request.form['numeroID']
             nombres = request.form['nombres']
@@ -194,19 +191,6 @@ def user_in():
 
         return render_template("espaciousuario.html", usuario = g.user[1], titulo = "Espacio de Usuario", listaproductos = listaproductos)
     return redirect( url_for( 'logout' ) )
-
-
-@app.route('/admin_in', methods=['GET', 'POST'] )
-@login_required
-def admin_in():
-    if check_password_hash(g.user[2], 'AD'):
-        tipo = '2'
-    elif check_password_hash(g.user[2], 'SA'):
-        tipo = '3'
-    else:
-        return redirect( url_for( 'logout' ) )
-
-    return render_template("admindashboard.html", usuario = g.user[1], tipo = tipo )
 
 
 @app.route('/calificaproducto', methods=['GET', 'POST'])
@@ -361,6 +345,143 @@ def editalistadeseos():
         return redirect( url_for('user_in') )
     return redirect(url_for('logout'))
 
+
+@app.route('/admin_in', methods=['GET', 'POST'] )
+@login_required
+def admin_in():
+    if check_password_hash(g.user[2], 'AD'):
+        tipo = '2'
+    elif check_password_hash(g.user[2], 'SA'):
+        tipo = '3'
+    else:
+        return redirect( url_for( 'logout' ) )
+
+    condb = get_db()
+    #captura los usuarios de la tabla 'usuarios'
+    listausuarios = condb.execute(
+        'SELECT alias, nombres, apellidos, T.abreviatura, id_usuario, pais, email FROM usuarios, tipos_id T WHERE T.cod_id = tipo_id ORDER BY alias'
+    ).fetchall()
+
+    #captura los productos de la tabla 'productos'
+    listaproductos = condb.execute(
+        'SELECT PROD.sku, PROD.nomb_prod, PROD.invi_prod, (SELECT avg(UP.califica) FROM usu_prod AS UP WHERE UP.producto = PROD.id_prod AND UP.califica IS NOT NULL AND UP.califica > 0) AS calprom, (SELECT count(UP.comentario) FROM usu_prod AS UP WHERE UP.producto = PROD.id_prod AND UP.comentario IS NOT NULL AND UP.comentario IS NOT "") AS cantcoment FROM productos AS PROD'
+    ).fetchall()
+    close_db()
+    return render_template("admindashboard.html", usuario = g.user[1], tipo = tipo, listausuarios = listausuarios, listaproductos = listaproductos )
+
+
+@app.route('/actividadusuario', methods=['GET', 'POST'])
+@login_required
+def actividadusuario():
+    usuerprog = g.user[1]
+    if request.method == 'POST':
+        if check_password_hash(g.user[2], 'AD'):
+            tipo = '2'
+        elif check_password_hash(g.user[2], 'SA'):
+            tipo = '3'
+        else:
+            return redirect( url_for( 'logout' ) )
+
+        alias = request.form['inputalias']
+        condb = get_db()
+        #traigo los datos del usuario seleccionado
+        ususel = condb.execute(
+            'SELECT USU.alias, (SELECT TI.nom_id from tipos_id AS TI WHERE TI.cod_id = USU.tipo_id) AS tipoid, USU.id_usuario, USU.nombres, USU.apellidos, USU.email, (SELECT PA.nom_pais from paises AS PA WHERE PA.cod_pais = USU.pais) AS nompais, USU.rol, USU.foto, USU.registrado, USU.ultimoacceso FROM usuarios AS USU WHERE USU.alias = ?', (alias,)
+            ).fetchone()
+        #traigo la actividad (comentarios, prods en lista de deseos y calificaciones)
+        produsu = condb.execute(
+            'SELECT producto, comentario, califica, lista_deseos, fecha FROM usu_prod WHERE usuario = ?', (alias,)
+        ).fetchall
+        close_db()
+        return render_template('actividadusuario.html', usuario = usuerprog, tipo = tipo, ususel = ususel, produsu = produsu)
+    return redirect(url_for('logout'))
+
+
+@app.route('/administrausuario', methods=['GET', 'POST'])
+@login_required
+def administrausuario():
+    usuerprog = g.user[1]
+    if request.method == 'POST':
+        if check_password_hash(g.user[2], 'AD'):
+            tipo = '2'
+        elif check_password_hash(g.user[2], 'SA'):
+            tipo = '3'
+        else:
+            return redirect( url_for( 'logout' ) )
+
+        alias = request.form['inputalias']
+        condb = get_db()
+        #traigo los datos del usuario seleccionado
+        ususel = condb.execute(
+            'SELECT USU.alias, (SELECT TI.nom_id from tipos_id AS TI WHERE TI.cod_id = USU.tipo_id) AS tipoid, USU.id_usuario, USU.nombres, USU.apellidos, USU.email, (SELECT PA.cod_pais from paises AS PA WHERE PA.cod_pais = USU.pais) AS nompais, USU.rol, USU.foto, USU.registrado, USU.ultimoacceso FROM usuarios AS USU WHERE USU.alias = ?', (alias,)
+            ).fetchone()
+        lisids = condb.execute(
+            'SELECT cod_id, nom_id FROM tipos_id'
+        ).fetchall()
+        lispais = condb.execute(
+            'SELECT cod_pais, nom_pais FROM paises ORDER BY nom_pais'
+        ).fetchall()
+        close_db()
+        if check_password_hash(ususel[7], 'AD'):
+            usurol = 'Administrador'
+        elif check_password_hash(ususel[7], 'SA'):
+            usurol = 'Súper Admin'
+        elif check_password_hash(ususel[7], 'US'):
+            usurol = 'Usuario'
+        else:
+            usurol = 'ERROR EN ROL'
+
+        return render_template('administrarusuario.html', usuario = usuerprog, tipo = tipo, ususel = ususel, usurol = usurol, lisids = lisids, lispais = lispais)
+    return redirect(url_for('logout'))
+
+
+@app.route('/actualizadatosusuario', methods=['GET', 'POST'])
+@login_required
+def actualizadatosusuario():
+    usuerprog = g.user[1]
+    if request.method == 'POST':
+        nombres = request.form['nombres']
+        apellidos = request.form['apellidos']
+        tipoid_usuario = request.form['tipoid_usuario']
+        numid_usuario = request.form['numid_usuario']
+        pais = request.form['pais']
+        email = request.form['email']
+        actualizadatusu = request.form['actualizadatusu']
+
+        if actualizadatusu == 'Cancelar':  #pulsaron 'Cancelar'
+            return redirect( url_for('user_in') )
+
+        print('actualizadatosusuario - los datos son:')
+        print('tipoid_usuario:')
+        print(tipoid_usuario)
+        print('pais:')
+        print(pais)
+        return redirect( url_for('user_in') )
+
+
+
+
+        condb = get_db()
+        if check_password_hash(g.user[2], 'SA'):
+            rol_usuario = request.form['rol_usuario']
+            rolcifrado = generate_password_hash(rol_usuario)
+            condb.execute(
+                'UPDATE usuarios SET id_usuario = ?, tipo_id = ?, nombres = ?, apellidos = ?, email = ?, pais = ?, rol = ? WHERE alias = ?', (numid_usuario, tipoid_usuario, nombres, apellidos, email, pais, rolcifrado, actualizadatusu) )
+        else:
+            condb.execute(
+                'UPDATE usuarios SET id_usuario = ?, tipo_id = ?, nombres = ?, apellidos = ?, email = ?, pais = ? WHERE alias = ?', (numid_usuario, tipoid_usuario, nombres, apellidos, email, pais, actualizadatusu) )
+        condb.commit()
+        close_db()
+        flash('¡Información actualizada!')
+        return redirect( url_for('user_in') )
+    return redirect(url_for('logout'))
+
+
+@app.route('/administrarproducto', methods=['GET', 'POST'])
+@login_required
+def administrarproducto():
+    pass
+
 @app.route('/agregarproducto', methods=['GET', 'POST'])
 def agregarproducto():
         form = Formulario_Agregar_Producto( request.form )
@@ -413,6 +534,15 @@ def eliminarproducto():
 
 @app.route('/pruebas')
 def pruebas():
+    alias = 'lunac'
+    condb = get_db()
+    lista = condb.execute(
+        'SELECT producto, comentario, califica, lista_deseos, fecha FROM usu_prod WHERE usuario = ?', (alias,)
+    ).fetchall()
+    close_db()
+    return render_template('pruebas.html', lista = lista)
+
+
     condb = get_db()
     if condb is not None:
         lista = condb.execute(

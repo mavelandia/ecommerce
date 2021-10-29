@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Actividad de Usuario{% endblock %}
+{% block header %}
+    <img src="{{ url_for('static', filename='img/user.png') }}" alt="Foto del Usuario" height="20" width="20"> |
+    <a href="#">Mis datos</a> |
+    <a href="{{ url_for('logout') }}">Salir de mi Cuenta</a> <br>
+    {% if usuario %}
+        <p style="text-align: right; padding-top: 5px">
+            <strong style="color: green;">{{ usuario }}</strong> [
+            <strong style="color: red;">
+                {% if tipo == '2' %} Administrador {% endif  %}
+                {% if tipo == '3' %} Súper Adm {% endif  %}
+        </strong>] - <a href="{{ url_for('admin_in') }}">Ir al Dashboard</a> </p>
+    {% endif %}
+{% endblock %}
+
+{% block contenido %}
+
+<table align="center" style="width: 100%; border:solid">
+
+{% endblock %}
+
+
+
+
+
+

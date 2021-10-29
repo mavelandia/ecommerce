@@ -85,7 +85,7 @@
 <table align="center" style="width: 100%;">
     <tr>
         <form action="{{ url_for('guardarprefprod') }}" method="post", name="guardarpreferenciasproducto">
-                <td align="center" style="width: 25%;">
+            <td align="center" style="width: 25%;">
                 <img src="{{ url_for('static', filename='img/wishlist.png') }}" alt="Añadir a Mi lista de Deseos" width="60" height="60"><br>
                 {% if caliprevia[3] == 1 %}
                     <h3>¡Genial! - El producto ya está en tu Lista de Deseos</h3>
@@ -93,8 +93,7 @@
                 {% else %}
                     <input type="checkbox" name="agregarlisdeseos" style="font-size: larger;">
                 {% endif %}
-                <label for="agregarlisdeseos" style="font-size: larger;"> ¡Quiero éste producto!</label>
-                <br> <br> <br>
+                <label for="agregarlisdeseos" style="font-size: larger;"> ¡Quiero éste producto!</label> <br> <br> <br>
             </td>
             <td style="width: 5%;"> </td>
             <td style="width: 35%;">

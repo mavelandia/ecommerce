@@ -12,13 +12,13 @@ h1 {
   font-weight: bold;
 }
 
-a:hover {
+a:hover, .link-button:hover {
   text-decoration: none;
   color: black;
   text-decoration-line: underline;
 }
 
-a:visited {
+a:visited, .link-button:hover {
   text-decoration: none;
   color: blue;
 }
@@ -26,6 +26,14 @@ a:visited {
 p {
 	margin: 0 0 1.3em 0;
 }
+
+.link-button { 
+  background: none;
+  border: none;
+  color: blue;
+  cursor: pointer; 
+}
+
 
 div {
   padding-bottom: 3px;

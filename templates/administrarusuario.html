@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Actividad de Usuario{% endblock %}
+{% block header %}
+    <img src="{{ url_for('static', filename='img/user.png') }}" alt="Foto del Usuario" height="20" width="20"> |
+    <a href="#">Mis datos</a> |
+    <a href="{{ url_for('logout') }}">Salir de mi Cuenta</a> <br>
+    {% if usuario %}
+        <p style="text-align: right; padding-top: 5px">
+            <strong style="color: green;">{{ usuario }}</strong> [
+            <strong style="color: red;">
+                {% if tipo == '2' %} Administrador {% endif  %}
+                {% if tipo == '3' %} Súper Adm {% endif  %}
+        </strong>] - <a href="{{ url_for('admin_in') }}">Ir al Dashboard</a> </p>
+    {% endif %}
+{% endblock %}
+
+{% block contenido %}
+
+<h2 style="font-weight: bold; text-align: center;">ADMINISTRAR DATOS DEL USUARIO</h2>
+
+<form action="{{ url_for('actualizadatosusuario') }}" method="post", name="actualizadatosusuario" autocomplete="off">
+    <table align="center" style="width: 70%; text-align:left; border:solid; border-radius: 3%;">
+        <tr> <td> <br> </td></tr>
+        <tr>
+            <td rowspan="10" align="center">
+                <img src="/static/users/{{'user' if ususel[8] == 0 else ususel[0]}}.jpg" alt="Foto del usuario" width="200" style="border-radius: 3%; border-color: darkgrey; border-style: groove; ">
+            </td>
+            <td  style="font-weight: bold;">ALIAS:</td>
+            <td>{{ususel[0]}}</td>
+        </tr>
+        <tr>
+            <td  style="font-weight: bold;">NOMBRES:</td>
+            <td> <input type="text" name="nombres" id="nombres" value={{ususel[3]}} /> </td>
+        </tr>
+        <tr>
+            <td  style="font-weight: bold;">APELLIDOS:</td>
+            <td> <input type="text" name="apellidos" id="apellidos" value={{ususel[4]}} /> </td>
+        </tr>
+        <tr>
+            <td  style="font-weight: bold;">TIPO IDENTIFICACIÓN:</td>
+            <td>
+                <select name="tipoid_usuario" id="tipoid_usuario">
+                    {% for tiposid in lisids %}
+                        {% if tiposid[0] == ususel[1] %}
+                            <option value="{{tiposid[0]}}" selected>{{tiposid[1]}}</option>
+                        {% else %}
+                            <option value="{{tiposid[0]}}">{{tiposid[1]}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td  style="font-weight: bold;">NÚMERO IDENTIFICACIÓN:</td>
+            <td> <input type="text" name="numid_usuario" id="numid_usuario" value={{ususel[2]}} /> </td>
+        </tr>
+        <tr>
+            <td  style="font-weight: bold;">PAIS:</td>
+            <td>
+                <select name="pais" id="pais">
+                    {% for paisusu in lispais %}
+                        {% if paisusu[0] == ususel[6] %}
+                            <option value="{{paisusu[0]}}" selected>{{paisusu[1]}}</option>
+                        {% else %}
+                            <option value="{{paisusu[0]}}">{{paisusu[1]}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td  style="font-weight: bold;">EMAIL:</td>
+            <td> <input type="text" name="email" id="email" value={{ususel[5]}} /> </td>
+        </tr>
+        <tr>
+            <td  style="font-weight: bold;">FECHA REGISTRO:</td>
+            <td>{{ususel[9]}}</td>
+        </tr>
+        <tr>
+            <td  style="font-weight: bold;">ULTIMO ACCESO:</td>
+            <td>{{ususel[10]}}</td>
+        </tr>
+        <tr>
+            <td  style="font-weight: bold;">ACTIVIDAD:</td>
+            <td>
+                {% if tipo == '3' %}
+                    <select name="rol_usuario" id="rol_usuario">
+                        {% if usurol == 'Administrador' %}
+                            <option value="AD" selected>{{usurol}}</option>
+                        {% else %}
+                            <option value="AD">Administrador</option>
+                        {% endif %}
+                        {% if usurol == 'Súper Admin' %}
+                            <option value="SA" selected>{{usurol}}</option>
+                        {% else %}
+                            <option value="SA">Súper Admin</option>
+                        {% endif %}
+                        {% if usurol == 'Usuario' %}
+                            <option value="US" selected>{{usurol}}</option>
+                        {% else %}
+                            <option value="US">Usuario</option>
+                        {% endif %}
+                        {% if usurol == 'ERROR EN ROL' %}
+                            <option value="US" selected>{{usurol}}</option>
+                        {% else %}
+                            <option value="US">ERROR EN ROL</option>
+                        {% endif %}
+                    </select>
+                {% else %}
+                    {{usurol}} (Sólo el "Súper Adm" puede actualizarlo!)
+                {% endif %}
+            </td>
+        </tr>
+        <tr> <td> <br> </td></tr>
+        <tr>
+            <td></td> <td></td>
+            <td align="center">
+                <button type="submit" name="actualizadatusu" value="{{ususel[0]}}">Actualizar Datos</button>
+                <button type="submit" name="actualizadatusu" value="Cancelar">Cancelar</button>
+            </td>
+        </tr>
+    </table> <br> <br>
+</form>
+
+{% endblock %}
+
+
+
+
+
+

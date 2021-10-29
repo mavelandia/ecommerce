@@ -1,26 +1,40 @@
-md templates
-
-md static
-
+ENTORNO VIRTUAL:
 pip install virtualenv
-
 python -m venv env
-
 env\Scripts\activate.bat
 
+LIBRERIAS:
 pip install flask
-
 pip install yagmail[all]
-
 pip install validate_email
-
 pip install flask-wtf
 
-set FLASK_APP=app
+PARA HEROKU, hay que incluir 2 librerias adicionales:
+pip install gunicorn
+pip install python-decouple
 
-set FLASK_ENV=deployment
+ARCHIVO DE REQUERIMIENTOS:
+pip freeze > requirements.txt
+
+VARIABLES DE ENTORNO:
+set FLASK_APP=app
+set FLASK_ENV=development
 
 flask run
 
 
+GITHUB: linkear el repositorio:
+remote add origin 
 
+
+PYTHONANYWHERE:
+en la consola, aparte de las librerías del programa, hay que instalar:
+pip install --upgrade keyring
+pip install --upgrade pip
+pip install --upgrade setuptools
+pip install keyrings.alt
+pip install keyring_jeepney
+
+Después, hay que configurar el PWD del email, comando:
+python -m keyring set system <email@server.com>
+con ésto, el sistema pide la clave

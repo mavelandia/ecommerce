@@ -1,5 +1,18 @@
-{{ lista }}
-<br> <br> <br>
+{{ lista }} <br> <br> <br>
+
+<h2>FORMA 1</h2>
+<ul>
+    {% for contador in lista %}
+        <li>{{contador[0]}}</li>
+        <li>{{contador[1]}}</li>
+        <li>{{contador[2]}}</li>
+        <li>{{contador[3]}}</li>
+        <li>{{contador[4]}}</li>
+        <br>
+    {% endfor %}
+</ul>
+
+<br> <br> <h2>FORMA 2</h2>
 {% for result in lista %}
     <ul>
     {% for elem in result %}
