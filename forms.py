@@ -89,9 +89,6 @@ class formulario_Nuevo_Usuario( Form ):
 
 
 class Formulario_Agregar_Producto( Form ):
-    sku = StringField('SKU',
-    [validators.DataRequired('Dato requerido')])
-
     nomprod = StringField('Nombre Producto',
     [validators.DataRequired('Dato requerido'),])
 

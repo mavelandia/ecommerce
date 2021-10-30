@@ -11,6 +11,7 @@ from forms import Formulario_Login, formulario_Nuevo_Usuario, Formulario_Agregar
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+app.config['UPLOAD_FOLDER'] = '/prod'
 
 def login_required(view):
     @functools.wraps( view ) # toma una función utilizada en un decorador y añadir la funcionalidad de copiar el nombre de la función.
@@ -40,8 +41,6 @@ def index():
     id_usuario = session.get('id_usuario')
     if id_usuario is None:
         return redirect( url_for( 'login' ) )
-    else: 
-        return redirect( url_for( 'user_in' ) )
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -167,8 +166,8 @@ def registrarusuario():
                 #Enviar un correo.
                 subject=alias + ', Tu registro en ForEver 21'
                 contents='<h2>Bienvenid@, Gracias por registrarte con nosotros!</h2> <br><br>Éstos son tus datos:<br><strong>Nombre de Usuario:</strong> {}<br><strong>Contraseña:</strong> {}<br><br>Guarda tus datos para poder ingresar a nuestra plataforma. <strong>¡Pronto actualizaremos el método de autenticación por email!</strong>'.format(alias,clave)
-                yagmail.SMTP('forever21uninortemintic@gmail.com').send(email, subject, contents)
-                flash('Revisa tu correo electrónico')
+ #               yagmail.SMTP('forever21uninortemintic@gmail.com').send(email, subject, contents)
+ #               flash('Revisa tu correo electrónico')
                 return redirect( url_for( 'login' ) )
         #método GET
         return render_template("registrarusuario.html", form=form, titulo = "Registrar Nuevo Usuario")
@@ -178,14 +177,14 @@ def registrarusuario():
  #       return render_template("registrarusuario.html", form=form, titulo = "Verifique y reintente")
 
 
-@app.route('/user_in', methods=['GET', 'POST'])
+@app.route('/user_in')
 @login_required
 def user_in():
     if check_password_hash(g.user[2], 'US'):
         #captura los productos de la tabla 'productos'
         condb = get_db()
         listaproductos = condb.execute(
-            'SELECT sku, nomb_prod FROM productos'
+            'SELECT sku, nomb_prod FROM productos ORDER BY random()'
         ).fetchall()
         close_db()
 
@@ -291,13 +290,12 @@ def editacomentario():
         btneditcomm = request.form['btneditcomm']
         editarcomentario = request.form['editarcomentario']
         fechor = datetime.datetime.now().strftime('%a %x, %X') #fecha/hora del sistema
-        condb = get_db()
         if btneditcomm == 'Eliminar':  #pulsaron 'Borrar comentario'
             editarcomentario = None
 
+        condb = get_db()
         condb.execute(
-            'UPDATE usu_prod SET comentario = ?, fecha = ? WHERE usuario = ? AND producto = ?', (editarcomentario, fechor, usuerprog, prodSel)
-            )
+            'UPDATE usu_prod SET comentario = ?, fecha = ? WHERE usuario = ? AND producto = ?', (editarcomentario, fechor, usuerprog, prodSel) )
         condb.commit()
         close_db()
         flash('¡Información actualizada!')
@@ -337,8 +335,7 @@ def editalistadeseos():
             calificaproducto = None
             mantienelistadeseos = 0
         condb.execute(
-            'UPDATE usu_prod SET califica = ?, lista_deseos = ?, fecha = ? WHERE usuario = ? AND producto = ?', (calificaproducto, mantienelistadeseos, fechor, usuerprog, prodSel)
-            )
+            'UPDATE usu_prod SET califica = ?, lista_deseos = ?, fecha = ? WHERE usuario = ? AND producto = ?', (calificaproducto, mantienelistadeseos, fechor, usuerprog, prodSel) )
         condb.commit()
         close_db()
         flash('¡Información actualizada!')
@@ -346,7 +343,7 @@ def editalistadeseos():
     return redirect(url_for('logout'))
 
 
-@app.route('/admin_in', methods=['GET', 'POST'] )
+@app.route('/admin_in')
 @login_required
 def admin_in():
     if check_password_hash(g.user[2], 'AD'):
@@ -397,6 +394,10 @@ def actividadusuario():
     return redirect(url_for('logout'))
 
 
+@app.route('/editaactividadusuario')
+def editaactividadusuario():
+    pass
+
 @app.route('/administrausuario', methods=['GET', 'POST'])
 @login_required
 def administrausuario():
@@ -440,87 +441,59 @@ def administrausuario():
 def actualizadatosusuario():
     usuerprog = g.user[1]
     if request.method == 'POST':
-        nombres = request.form['nombres']
-        apellidos = request.form['apellidos']
-        tipoid_usuario = request.form['tipoid_usuario']
-        numid_usuario = request.form['numid_usuario']
-        pais = request.form['pais']
-        email = request.form['email']
+        nombre_usu = request.form['nombres']
+        apellido_usu = request.form['apellidos']
+        tipoid_usu = request.form['tipoid_usuario']
+        numid_usu = request.form['numid_usuario']
+        pais_usu = request.form['pais']
+        email_usu = request.form['email']
         actualizadatusu = request.form['actualizadatusu']
 
         if actualizadatusu == 'Cancelar':  #pulsaron 'Cancelar'
-            return redirect( url_for('user_in') )
-
-        print('actualizadatosusuario - los datos son:')
-        print('tipoid_usuario:')
-        print(tipoid_usuario)
-        print('pais:')
-        print(pais)
-        return redirect( url_for('user_in') )
-
-
-
+            return redirect( url_for('admin_in') )
 
         condb = get_db()
         if check_password_hash(g.user[2], 'SA'):
             rol_usuario = request.form['rol_usuario']
             rolcifrado = generate_password_hash(rol_usuario)
             condb.execute(
-                'UPDATE usuarios SET id_usuario = ?, tipo_id = ?, nombres = ?, apellidos = ?, email = ?, pais = ?, rol = ? WHERE alias = ?', (numid_usuario, tipoid_usuario, nombres, apellidos, email, pais, rolcifrado, actualizadatusu) )
+                'UPDATE usuarios SET id_usuario = ?, tipo_id = ?, nombres = ?, apellidos = ?, email = ?, pais = ?, rol = ? WHERE alias = ?', (numid_usu, tipoid_usu, nombre_usu, apellido_usu, email_usu, pais_usu, rolcifrado, actualizadatusu) )
         else:
             condb.execute(
-                'UPDATE usuarios SET id_usuario = ?, tipo_id = ?, nombres = ?, apellidos = ?, email = ?, pais = ? WHERE alias = ?', (numid_usuario, tipoid_usuario, nombres, apellidos, email, pais, actualizadatusu) )
+                'UPDATE usuarios SET id_usuario = ?, tipo_id = ?, nombres = ?, apellidos = ?, email = ?, pais = ? WHERE alias = ?', (numid_usu, tipoid_usu, nombre_usu, apellido_usu, email_usu, pais_usu, actualizadatusu) )
         condb.commit()
         close_db()
         flash('¡Información actualizada!')
-        return redirect( url_for('user_in') )
+        return redirect( url_for('admin_in') )
     return redirect(url_for('logout'))
+
+
+@app.route('/agregarproducto')
+@login_required
+def agregarproducto():
+    usuerprog = g.user[1]
+    form = Formulario_Agregar_Producto( request.form )
+    if request.method == 'POST':
+        if check_password_hash(g.user[2], 'AD'):
+            tipo = '2'
+        elif check_password_hash(g.user[2], 'SA'):
+            tipo = '3'
+        else:
+            return redirect( url_for( 'logout' ) )
+
+        return render_template('agregarproducto.html', form = form, usuario = usuerprog, tipo = tipo)
+    return redirect(url_for('logout'))
+
+
+@app.route('/guardarproducto', methods=['GET', 'POST'])
+def guardarproducto():
+    pass
 
 
 @app.route('/administrarproducto', methods=['GET', 'POST'])
 @login_required
 def administrarproducto():
     pass
-
-@app.route('/agregarproducto', methods=['GET', 'POST'])
-def agregarproducto():
-        form = Formulario_Agregar_Producto( request.form )
-        if request.method == 'POST':       
- #           usuario = request.form['usuario']
- #           email = request.form['email']
- #           password = request.form['password']
- #           nombres = request.form['nombres'] 
-
-            error = None
-            
-            #1. Validar campos
- #           if not isUsernameValid(usuario):
- #               # Si está mal.
- #               error = "El usuario debe ser alfanumerico o incluir solo '.','_','-'"
- #               flash(error)
- #           if not isEmailValid(email):
- #               # Si está mal.
- #               error = "Correo invalido"
- #               flash(error)
- #           if not isPasswordValid(password):
- #               # Si está mal.
- #               error = "La contraseña debe contener al menos una minúscula, una mayúscula, un número y 8 caracteres"
- #               flash(error)
-
-            if error is not None:
-                # Ocurrió un error
-                return render_template("agregarproducto.html", form=form, titulo = "Verifique y reintente")
-            else:
-                #2. Guardar producto
-
-                flash('Producto guardado')
-
-                #3. redirect para ir a otra URL
-                return redirect( url_for( 'admin_in', usuario = 'alejo' ) )
-
-        #método GET
-        return render_template("agregarproducto.html", form=form, titulo = "Agregar Producto")
-
 
 @app.route('/editarproducto', methods=['GET', 'POST'])
 def editarproducto():
